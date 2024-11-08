@@ -10,13 +10,18 @@ df = pd.read_json('med_MOCK_DATA.json')
 df.columns = df.columns.str.strip()
 
 # Verificar los nombres de las columnas
-print("Columnas disponibles:", df.columns)
+print("\n" + "="*50)
+print(" Columnas disponibles en el DataFrame ")
+print("="*50)
+print(", ".join(df.columns))
 
 # Mostrar los primeros registros del DataFrame para verificar
+print("\nPrimeros registros del DataFrame:")
+print("="*50)
 print(df.head())
 
 # Manejar valores faltantes (eliminar filas con NaN o rellenarlas con la media)
-df = df.dropna()  # Eliminar filas con NaN (si decides eliminar las filas con datos faltantes)
+df = df.dropna()  # Eliminar filas con NaN
 
 # Codificar la columna 'genero' como numérica (Masculino=1, Femenino=0)
 df['genero'] = df['genero'].map({'Masculino': 1, 'Femenino': 0})
@@ -39,9 +44,15 @@ y_pred = modelo.predict(X_test)
 
 # Evaluar el rendimiento del modelo utilizando el error cuadrático medio (MSE)
 mse = mean_squared_error(y_test, y_pred)
-print(f"Error cuadrático medio (MSE): {mse}")
+print("\n" + "="*50)
+print(f" Error Cuadrático Medio (MSE): {mse:.2f}")
+print("="*50)
 
-# Imprimir las predicciones para los primeros 100 registros del conjunto de prueba
-print("Predicciones para los primeros 100 registros del conjunto de prueba:")
-for pred in y_pred[:100]:  # Mostrar los primeros 20 registros
-    print(pred)
+# Imprimir las predicciones para los primeros 100 registros del conjunto de prueba en formato tabular
+print("\nPredicciones para los primeros 100 registros del conjunto de prueba:")
+print("="*50)
+
+for i, pred in enumerate(y_pred[:100], 1):
+    print(f"{i:>3}: {pred:.2f}")
+    if i % 10 == 0:
+        print("-"*50)  # Separador cada 10 registros
